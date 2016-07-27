@@ -130,7 +130,7 @@ public class SoundControlView extends View {
         }else{
             dotPaint.setColor(dotBgColor);
         }
-        //画第一个音量点
+        //画第一个音量点，
         canvas.drawArc(dotRect, -180, 2 * gapAngle, false, dotPaint);
 
 
