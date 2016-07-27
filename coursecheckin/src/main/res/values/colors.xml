@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--白天标准色-->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="backColor">#cfc2c6</color>
+    <color name="backColor_checkInInfo">#b4b4ae</color>
+    <color name="default_baseColor">@color/colorPrimary</color>
+
+    <!--白天模式-->
+    <color name="default_toolBarBackColor">@color/colorPrimary</color>
+    <color name="default_viewPagerBackColor">@color/colorAccent</color>
+    <color name="default_extraFunctionBackColor">@color/colorPrimary</color>
+    <color name="default_radioBtnTextColor">@color/colorPrimary</color>
+    <color name="default_cardViewBackColor">@color/backColor</color>
+    <color name="default_faBtnBackColor">@color/colorAccent</color>
+
+    <!--夜间标准色-->
+    <color name="night_barColor">#FD121111</color>
+    <color name="night_baseColor">#FD020438</color>
+    <!--夜间模式-->
+    <color name="night_toolBarBackColor">@color/night_barColor</color>
+    <color name="night_viewPagerBackColor">@color/night_baseColor</color>
+    <color name="night_extraFunctionBackColor">@color/night_baseColor</color>
+    <color name="night_extraFunctionTopImageBackColor">@color/night_baseColor</color>
+    <color name="night_radioBtnTextColor">@color/night_baseColor</color>
+    <color name="night_cardViewBackColor">@color/backColor</color>
+    <color name="night_faBtnBackColor">@color/night_baseColor</color>
+</resources>

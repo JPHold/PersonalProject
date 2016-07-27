@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TagCloudLayout">
+        <attr name="lineSpacing" format="dimension"/>
+        <attr name="tagSpacing" format="dimension"/>
+    </declare-styleable>
+    <!--主activity-->
+    <attr name="baseColor" format="color"></attr>
+    <attr name="toolBarBackColor" format="color"></attr>
+    <attr name="viewPagerBackColor" format="color"></attr>
+    <attr name="radioBtnTextColor" format="color"></attr>
+    <attr name="cardViewBackColor" format="color"></attr>
+    <attr name="fabBtnBackColor" format="color"></attr>
+    <!--扩展功能activity-->
+    <attr name="extraFunctionBackColor" format="color"></attr>
+    <attr name="extraFunctionTopImageBackGround" format="color"></attr>
+
+    <!--安全手势锁ViewGroup和View-->
+    <attr name="color_no_finger_inner_circle" format="color" />
+    <attr name="color_no_finger_outer_circle" format="color" />
+    <attr name="color_finger_on" format="color" />
+    <attr name="color_finger_up" format="color" />
+    <attr name="count" format="integer" />
+    <attr name="tryTimes" format="integer" />
+    <declare-styleable name="GestureLockViewGroup">
+        <attr name="color_no_finger_inner_circle" />
+        <attr name="color_no_finger_outer_circle" />
+        <attr name="color_finger_on" />
+        <attr name="color_finger_up" />
+        <attr name="count" />
+        <attr name="tryTimes" />
+    </declare-styleable>
+
+</resources>

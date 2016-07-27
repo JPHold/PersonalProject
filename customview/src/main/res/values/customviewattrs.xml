@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RandomNumberView">
+        <attr name="numColor" format="integer"></attr>
+        <attr name="numSize" format="dimension"></attr>
+        <attr name="numText" format="string"></attr>
+    </declare-styleable>
+    <declare-styleable name="IntroducePhotoView">
+        <attr name="introduceColor" format="integer" />
+        <attr name="introduceSize" format="dimension" />
+        <attr name="introduceText" format="string" />
+        <attr name="photo" format="reference" />
+        <attr name="photoScaleType" format="integer">
+            <enum name="fillXY" value="0" />
+            <enum name="center" value="1"></enum>
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="ColorCircleAnimationView">
+        <attr name="firstColor" format="color" />
+        <attr name="secondColor" format="color" />
+        <attr name="arcWidth" format="float" />
+        <attr name="runSpeed" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="SoundControlView">
+        <attr name="dotWidth" format="integer">
+            <enum name="small" value="10" />
+            <enum name="mid" value="15" />
+            <enum name="big" value="20" />
+        </attr>
+        <attr name="dotBgColor" format="color" />
+        <attr name="dotControlColor" format="color" />
+        <attr name="centerPhoto" format="reference" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lineL_wrapStudent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginBottom="@dimen/y20">
+
+    <TextView
+        android:id="@+id/textV_checkInInfo_type"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y20"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+    <GridView
+        android:id="@+id/gridV_wrapStudent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:horizontalSpacing="@dimen/x15"
+        android:numColumns="3"
+        android:columnWidth="@dimen/x106"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="@dimen/y20"
+        android:background="#b4b4ae"/>
+</LinearLayout>

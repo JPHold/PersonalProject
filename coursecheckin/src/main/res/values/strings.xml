@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">签到</string>
+    <array name="loginType">
+        <item>教师</item>
+        <item>学生</item>
+    </array>
+    <string name="open_drawerLayout">""</string>
+    <string name="close_drawerLayout">""</string>
+
+    <!--基本-->
+    <string name="baseSure">确定</string>
+    <string name="baseNo">取消</string>
+    <!--修改签到-->
+    <string name="sureEdit">@string/baseSure</string>
+    <string name="noEdit">@string/baseNo</string>
+    <!--设置-->
+    <string name="notify">通知</string>
+    <string name="notify_remark_off">不接受通知</string>
+    <string name="notify_remark_on">接受通知</string>
+    <string name="ring">声音</string>
+    <string name="ring_remark_off">关闭声音</string>
+    <string name="ring_remark_on">开启声音</string>
+    <string name="deviceClock">设备锁</string>
+    <string name="deviceClock_remark_off">不需要安全验证</string>
+    <string name="deviceClock_remark_on">需要安全验证</string>
+    <string name="exit">退出</string>
+    <string name="exitDefine">是否退出</string>
+    <string name="sureExit">@string/baseSure</string>
+    <string name="noExit">@string/baseNo</string>
+
+
+</resources>

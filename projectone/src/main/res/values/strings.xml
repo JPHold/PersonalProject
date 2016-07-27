@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">ProjectOne</string>
+    <string name="toolBarOne_title">银行</string>
+    <string name="load">加载更多</string>
+    <array name="bankList">
+        <item>三门峡银行</item>
+        <item>上海农商银行</item>
+        <item>上海银行</item>
+        <item>上饶银行</item>
+        <item>东亚银行</item>
+        <item>东莞农商银行</item>
+        <item>东莞银行</item>
+    </array>
+    <array name="businessPieceTitle">
+        <item>卡交易</item>
+        <item>网上交易</item>
+        <item>信用卡账单</item>
+        <item>贷款款单</item>
+        <item>提醒服务</item>
+    </array>
+    <array name="businessMsg">
+        <item>贵公司提交了一笔向河北德瑞淀汇款的操作</item>
+        <item>你本次还他行信用卡的动态密码为123</item>
+        <item>您中国个人信用卡8月账单已发到绑定邮箱</item>
+        <item>您的贷款将于2017年6月9号</item>
+        <item>[] 尊敬的客户,您的总资产为12345</item>
+    </array>
+</resources>

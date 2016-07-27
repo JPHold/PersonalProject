@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ProgressBar
+        android:id="@+id/proBar.postCheckIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?android:progressBarStyleSmall"
+        android:visibility="invisible"
+        android:focusable="true" />
+    <LinearLayout
+        android:id="@+id/pop_mainContentView"
+        android:layout_width="@dimen/x212"
+        android:layout_height="@dimen/y59"
+        android:background="#814144ea"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y30"
+            android:gravity="center">
+
+            <Spinner
+                android:id="@+id/popup.spinner.courses"
+                android:layout_width="@dimen/x106"
+                android:layout_height="match_parent"
+                android:spinnerMode="dialog"
+                style="@android:style/Widget.Holo.Spinner"/>
+
+            <Spinner
+                android:id="@+id/popup.spinner.classes"
+                android:layout_width="@dimen/x106"
+                android:layout_height="match_parent"
+                android:spinnerMode="dialog" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y2"
+            android:background="#FFFF" />
+
+        <Button
+            android:id="@+id/popup.btn.postCheckIn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y29"
+            android:background="#fc0626f5"
+            android:textColor="#FFFF"
+            android:textSize="20sp"
+            android:text="发布签到"
+            android:gravity="center"/>
+    </LinearLayout>
+</RelativeLayout>

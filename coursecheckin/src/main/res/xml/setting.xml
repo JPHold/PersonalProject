@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="notify"
+        android:summaryOff="@string/notify_remark_off"
+        android:summaryOn="@string/notify_remark_on"
+        android:title="@string/notify" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="ring"
+        android:summaryOff="@string/ring_remark_off"
+        android:summaryOn="@string/ring_remark_on"
+        android:title="@string/ring" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="deviceClock"
+        android:summaryOff="@string/deviceClock_remark_off"
+        android:summaryOn="@string/deviceClock_remark_on"
+        android:title="@string/deviceClock" />
+    <Preference
+        android:key="exit"
+        android:title="@string/exit" >
+    </Preference>
+</PreferenceScreen>

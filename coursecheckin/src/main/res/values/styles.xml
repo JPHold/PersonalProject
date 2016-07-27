@@ -1,0 +1,46 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Popupwindow">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+    <style name="ToolBarWithNavigationBack">
+        <item name="navigationIcon">@drawable/abc_ic_ab_back_mtrl_am_alpha</item>
+    </style>
+
+    <!-- 签到类型下,存放学生的信息RadioButton的样式 -->
+    <style name="checkIn_student" >
+        <item name="android:textAppearance">@color/colorPrimary</item>
+        <item name="android:gravity">bottom|center_horizontal</item>
+        <item name="android:button">@null</item>
+    </style>
+
+    <!--白天模式-->
+ <style name="DefaultTheme" parent="BaseTheme">
+     <item  name="baseColor">@color/default_baseColor</item>
+     <item  name="toolBarBackColor">@color/default_toolBarBackColor</item>
+     <item  name="viewPagerBackColor">@color/default_viewPagerBackColor</item>
+     <item  name="extraFunctionBackColor">@color/default_extraFunctionBackColor</item>
+     <item  name="extraFunctionTopImageBackGround">@mipmap/extrafunction_topimage</item>
+     <item  name="radioBtnTextColor">@color/default_radioBtnTextColor</item>
+     <item  name="cardViewBackColor">@color/default_cardViewBackColor</item>
+ </style>
+    <!--夜间模式-->
+    <style name="nightTheme" parent="BaseTheme">
+        <item  name="baseColor">@color/night_baseColor</item>
+        <item  name="toolBarBackColor">@color/night_toolBarBackColor</item>
+        <item  name="viewPagerBackColor">@color/night_viewPagerBackColor</item>
+        <item  name="extraFunctionBackColor">@color/night_extraFunctionBackColor</item>
+        <item  name="extraFunctionTopImageBackGround">@color/night_extraFunctionTopImageBackColor</item>
+        <item  name="cardViewBackColor">@color/night_cardViewBackColor</item>
+    </style>
+</resources>

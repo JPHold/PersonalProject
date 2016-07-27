@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout_changeCheckIn"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/baseColor"
+        android:gravity="left|center_vertical"
+        android:text="学号"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/ediT_changeCheckIn_stuNum"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y25" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/baseColor"
+        android:gravity="left|center_vertical"
+        android:text="所属课程"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/radio_courses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y5"
+        android:background="?attr/baseColor"
+        android:gravity="left|center_vertical"
+        android:text="所属班级"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <RadioButton
+        android:id="@+id/radioBtn_class"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/radioBtnTextColor"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y5"
+        android:background="?attr/baseColor"
+        android:gravity="left|center_vertical"
+        android:text="修改签到类型"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+
+    <com.extraFunction.Layout.TagCloudLayout.TagCloudLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/checkB_defaultCheckInType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="正常"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/checkB_comLateCheckInType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="迟到"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/checkB_leaveEarlyCheckInType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="早退"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/checkB_exceedCheckInType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="逃课"
+            android:textSize="20sp" />
+
+    </com.extraFunction.Layout.TagCloudLayout.TagCloudLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_sureEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sureEdit"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_noEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x10"
+            android:text="@string/noEdit"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+</LinearLayout>

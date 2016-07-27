@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="checkIn.adapter.viewHolder" type="id" />
+    <item name="checkIn_updateId" type="id" />
+    <item name="checkIn_postGeoPoint" type="id" />
+</resources>

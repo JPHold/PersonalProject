@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/PersonalProject.iml" filepath="$PROJECT_DIR$/PersonalProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/achartengine/achartengine.iml" filepath="$PROJECT_DIR$/achartengine/achartengine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/coursecheckin/coursecheckin.iml" filepath="$PROJECT_DIR$/coursecheckin/coursecheckin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/customview/customview.iml" filepath="$PROJECT_DIR$/customview/customview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gesturelock/gesturelock.iml" filepath="$PROJECT_DIR$/gesturelock/gesturelock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/projectone/projectone.iml" filepath="$PROJECT_DIR$/projectone/projectone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testapp/testapp.iml" filepath="$PROJECT_DIR$/testapp/testapp.iml" />
+    </modules>
+  </component>
+</project>
