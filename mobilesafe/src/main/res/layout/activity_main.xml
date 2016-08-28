@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hjp.activity.MainActivity">
+<TextView
+    android:id="@+id/textV_main_title"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="16sp"
+    android:textColor="#000000"
+    android:background="@color/colorAccent"
+    android:text="功能列表"
+    android:gravity="center"/>
+    <RelativeLayout
+        android:id="@+id/reL_main_ad"
+        android:layout_width="match_parent"
+        android:layout_height="300px"
+        android:background="@mipmap/main_ad"
+        android:layout_below="@id/textV_main_title">
+        <ImageButton
+            android:id="@+id/imgBtn_main_ad_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_ad_delete"
+            android:scaleType="fitXY"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/textV_main_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!Hello World!"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:layout_below="@id/reL_main_ad"/>
+
+    <GridView
+        android:id="@+id/gridV_main_function"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3"/>
+</RelativeLayout>

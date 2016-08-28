@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hjp.activity">
+
+    <!--读取SIM卡信息，用于保存SIM的唯一凭证-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <!--开机广播，用于检测SIM是否被更换-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--用于在SIM被更换时，发短信-->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <!--用于接受安全号码发来的指令，执行相应操作-->
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <!--用于发送小偷的地理位置-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.LOCATION_HARDWARE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"/>
+    <!--振动-->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <!--播出电话的广播-->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".SplashActivity" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--防盗向导Activity-->
+        <activity android:name=".GuardTheftActivity" />
+        <!--高级工具Activity-->
+        <activity android:name=".AdvancedToolActivity"/>
+
+        <!--开机广播-->
+        <receiver android:name="com.hjp.broadcastReceiver.BootStrapReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+            </intent-filter>
+        </receiver>
+        <!--短信接收广播-->
+        <receiver android:name="com.hjp.broadcastReceiver.ReceiveSmsReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
+
+        <!--设备管理器设置广播-->
+        <receiver android:name="com.hjp.broadcastReceiver.GuardDeviceAdminReceiver"
+            android:label="@string/device_guard_title"
+            android:description="@string/device_guard_description"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_sample" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
+        <!--发送地理位置到安全号码-->
+        <service android:name="com.hjp.service.GuardGpsObtainService"/>
+
+    </application>
+
+</manifest>

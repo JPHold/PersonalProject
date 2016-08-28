@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <EditText
+        android:id="@+id/editT_dialog_set_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入密码" />
+
+
+    <EditText
+        android:id="@+id/editT_dialog_set_pwd_against"
+        style="@android:style/Widget.DeviceDefault.Light.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editT_dialog_input_pwd"
+        android:hint="再次输入密码" />
+
+</RelativeLayout>
