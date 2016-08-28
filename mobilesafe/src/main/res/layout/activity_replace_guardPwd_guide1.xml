@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearL_root_guide1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:text="@string/guide1_title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/guide1_main_point"
+                android:gravity="center_vertical"
+                android:text="@string/guide1_sim_alarm" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/guide1_main_point"
+                android:gravity="center_vertical"
+                android:text="@string/guide1_gps_location" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/guide1_main_point"
+                android:gravity="center_vertical"
+                android:text="@string/guide1_far_ruin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/guide1_main_point"
+                android:gravity="center_vertical"
+                android:text="@string/guide1_far_lock" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_guide1_nextGuide2"
+            style="@android:style/Widget.Holo.Light.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/linearL_root_guide1"
+            android:text="下一步" />
+    </RelativeLayout>
+
+
+</ScrollView>

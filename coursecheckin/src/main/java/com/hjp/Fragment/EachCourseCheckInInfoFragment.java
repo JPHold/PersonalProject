@@ -37,7 +37,7 @@ public class EachCourseCheckInInfoFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
         Log.i("fragment", "onActivityCreated: " + isVisible + "当前班级" + mCurrCourseName);
         isPrepared = true;
-        progressBar = (ProgressBar) fragmentLayout.findViewById(R.id.progressBar_classesCheckInInfo);
+//        progressBar = (ProgressBar) fragmentLayout.findViewById(R.id.progressBar_classesCheckInInfo);
 
     }
     private TaskIntentService.DataReturnListener dataListener;

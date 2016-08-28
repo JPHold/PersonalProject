@@ -7,6 +7,8 @@
       <module fileurl="file://$PROJECT_DIR$/coursecheckin/coursecheckin.iml" filepath="$PROJECT_DIR$/coursecheckin/coursecheckin.iml" />
       <module fileurl="file://$PROJECT_DIR$/customview/customview.iml" filepath="$PROJECT_DIR$/customview/customview.iml" />
       <module fileurl="file://$PROJECT_DIR$/gesturelock/gesturelock.iml" filepath="$PROJECT_DIR$/gesturelock/gesturelock.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lijungoodscount/lijungoodscount.iml" filepath="$PROJECT_DIR$/lijungoodscount/lijungoodscount.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mobilesafe/mobilesafe.iml" filepath="$PROJECT_DIR$/mobilesafe/mobilesafe.iml" />
       <module fileurl="file://$PROJECT_DIR$/projectone/projectone.iml" filepath="$PROJECT_DIR$/projectone/projectone.iml" />
       <module fileurl="file://$PROJECT_DIR$/testapp/testapp.iml" filepath="$PROJECT_DIR$/testapp/testapp.iml" />
     </modules>

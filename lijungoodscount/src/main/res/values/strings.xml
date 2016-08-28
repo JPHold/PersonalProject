@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LiJunGoodsCount</string>
+    <!--公式的提示的信息-->
+    <string name="formula_tip">公式：((x*2-1)*y+z)*n。下面的填写框分别对应x、y、z、n</string>
+</resources>
