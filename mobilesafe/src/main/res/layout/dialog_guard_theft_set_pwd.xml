@@ -7,6 +7,7 @@
 
     <EditText
         android:id="@+id/editT_dialog_set_pwd"
+        style="@android:style/Widget.DeviceDefault.Light.EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="输入密码" />
@@ -17,7 +18,7 @@
         style="@android:style/Widget.DeviceDefault.Light.EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editT_dialog_input_pwd"
+        android:layout_below="@id/editT_dialog_set_pwd"
         android:hint="再次输入密码" />
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.hjp.activity;
+package com.hjp.mobilesafe;
 
 import org.junit.Test;
 

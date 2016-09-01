@@ -1,4 +1,4 @@
-package com.hjp.activity;
+package com.hjp.mobilesafe;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

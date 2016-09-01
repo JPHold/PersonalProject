@@ -34,7 +34,7 @@
                 android:layout_centerVertical="true"
                 android:paddingRight="10dp" />
         </RelativeLayout>
-        <include layout="@layout/common_guardpwd_guide"/>
+        <include android:id="@+id/guardPwd_guide2_backAndNextBtn" layout="@layout/common_guardpwd_guide"/>
     </LinearLayout>
 
 </ScrollView>

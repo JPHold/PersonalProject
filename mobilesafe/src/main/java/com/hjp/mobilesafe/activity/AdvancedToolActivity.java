@@ -1,4 +1,4 @@
-package com.hjp.activity;
+package com.hjp.mobilesafe.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.hjp.mobilesafe.R;
 
 
 public class AdvancedToolActivity extends Activity {

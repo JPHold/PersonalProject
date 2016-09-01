@@ -3,24 +3,28 @@
     android:id="@+id/reL_root_guardTheft"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<TextView
-    android:id="@+id/guardPwd_title"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="16sp"
-    android:textColor="#000000"
-    android:text="手机防盗"
-    android:background="@color/colorAccent"
-    android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/guardPwd_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="手机防盗"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
     <LinearLayout
         android:id="@+id/linearL_root_guide_guardPwd"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@id/guardPwd_title"/>
-    <com.hjp.customview.LightPointView
+        android:layout_height="300dp"
+        android:layout_below="@id/guardPwd_title"
+        android:orientation="vertical" />
+
+    <com.hjp.mobilesafe.customview.LightPointView
         android:id="@+id/guide_guard_pwd_circle_point"
-       android:layout_width="100dp"
+        android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_below="@id/linearL_root_guide_guardPwd"/>
+        android:layout_below="@id/linearL_root_guide_guardPwd"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

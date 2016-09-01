@@ -12,7 +12,7 @@
         <item>设置中心</item>
     </string-array>
     <!--手机防盗设置向导第一步-->
-    <string name="guide1_title">您的手机防盗卫士</string>
+    <string name="guide1_title">您的手机防盗卫士有以下功能</string>
     <string name="guide1_sim_alarm">Sim卡变更报警</string>
     <string name="guide1_gps_location">GPS追踪</string>
     <string name="guide1_far_ruin">远程数据销毁</string>
