@@ -13,7 +13,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.hjp.customview.R;
+import com.com.hjp.mobilesafe.customview.R;
 
 /**
  * Created by HJP on 2016/1/26 0026.

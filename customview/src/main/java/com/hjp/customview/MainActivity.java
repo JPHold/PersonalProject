@@ -2,11 +2,12 @@ package com.hjp.customview;
 
 import android.app.Activity;
 import android.media.AudioManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+
+import com.com.hjp.mobilesafe.customview.R;
 
 import customview.SoundControlView;
 

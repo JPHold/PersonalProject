@@ -3,18 +3,20 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="D:\Android\IdeTool\android-studio(2.2 Pre1)\gradle\gradle-2.10" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/achartengine" />
             <option value="$PROJECT_DIR$/coursecheckin" />
             <option value="$PROJECT_DIR$/customview" />
+            <option value="$PROJECT_DIR$/down4.0test" />
             <option value="$PROJECT_DIR$/gesturelock" />
-            <option value="$PROJECT_DIR$/lijungoodscount" />
             <option value="$PROJECT_DIR$/mobilesafe" />
             <option value="$PROJECT_DIR$/projectone" />
+            <option value="$PROJECT_DIR$/test" />
             <option value="$PROJECT_DIR$/testapp" />
           </set>
         </option>

@@ -9,7 +9,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.hjp.customview.R;
+import com.com.hjp.mobilesafe.customview.R;
 
 import java.util.Timer;
 import java.util.TimerTask;

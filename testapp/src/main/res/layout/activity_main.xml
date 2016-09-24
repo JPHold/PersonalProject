@@ -10,10 +10,10 @@
         android:layout_height="200dp"
         android:src="@mipmap/color_filter"
         android:scaleType="fitXY"/>
-  <!--  <com.test.ColorFilterLayout
+    <com.test.ColorFilterLayout
         android:id="@+id/customV_test_colorFilter"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="30dp"/>-->
+        android:layout_marginTop="30dp"/>
 
 </LinearLayout>

@@ -1,2 +1,1 @@
-include ':coursecheckin', ':achartengine', ':gesturelock', ':testapp', ':projectone', ':customview', ':mobilesafe', ':lijungoodscount', 'mobilesafes'
-project('mobilesafes').projectDir = new File('mobilesafe/build.gradle')
+include ':coursecheckin', ':achartengine', ':gesturelock', ':testapp', ':projectone', ':customview', ':mobilesafe', ':test', ':down4.0test'

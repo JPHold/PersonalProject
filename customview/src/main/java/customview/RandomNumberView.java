@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import com.hjp.customview.R;
+import com.com.hjp.mobilesafe.customview.R;
 
 import java.util.Random;
 
