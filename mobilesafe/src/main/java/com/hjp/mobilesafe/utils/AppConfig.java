@@ -43,7 +43,8 @@ public class AppConfig {
         getDefaultSqlite();
         if (key.contains("is")) {
             return mSharedPreferences.getBoolean(key, false);
+        } else {
+            return mSharedPreferences.getString(key, "");
         }
-        return null;
     }
 }

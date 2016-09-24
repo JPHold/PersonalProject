@@ -3,12 +3,13 @@ package com.hjp.mobilesafe.activity;
 import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.telephony.TelephonyManager;
 import android.text.Html;
@@ -16,9 +17,9 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,16 +27,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hjp.mobilesafe.R;
+import com.hjp.mobilesafe.broadcastReceiver.GuardDeviceAdminReceiver;
+import com.hjp.mobilesafe.constant.Constant;
+import com.hjp.mobilesafe.customview.LightPointView;
+import com.hjp.mobilesafe.customview.SingleLineSelectLayout;
+import com.hjp.mobilesafe.listener.OnCallListener;
+import com.hjp.mobilesafe.utils.AppConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import com.hjp.mobilesafe.broadcastReceiver.GuardDeviceAdminReceiver;
-import com.hjp.mobilesafe.constant.Constant;
-import com.hjp.mobilesafe.customview.LightPointView;
-import com.hjp.mobilesafe.utils.AppConfig;
 
 /**
  * Created by HJP on 2016/8/19 0019.
@@ -55,6 +57,8 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
     private int mCurrGuidePosition;
     private EditText mEditT_input_safeNum;
     private boolean mIsOpenGuard = false;
+    private Context mContext;
+    private boolean mIsBandSim;
 
 
     @Override
@@ -65,6 +69,9 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
     }
 
     private void initView() {
+
+        mContext = getApplicationContext();
+
         linearL_root_guardTheft = (LinearLayout) findViewById(R.id.linearL_root_guide_guardPwd);
         lightPointView = (LightPointView) findViewById(R.id.guide_guard_pwd_circle_point);
         lightPointView.setCurrLightPosition(0);
@@ -88,30 +95,32 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
     /**
      * 号码-安全号码(SIM变更后发送到此)
      */
-    private int safeNum = 0;
+    private String safeNum = "";
 
     /**
      * 前一向导页还是后一向导页
      */
     public void showWhichGuidePage() {
         switch (mCurrGuidePosition) {
-            case 1:
+            case 0:
                 showGuardPwdGuide1();
                 break;
-            case 2:
+            case 1:
                 showGuardPwdGuide2();
                 break;
-            case 3:
-
+            case 2:
                 //如果没有绑定sim卡，不给第三步
                 if (!((boolean) obtainFromSqlite(Constant.KEY_ISBANDSIM))) {
+                    Log.i(TAG, "showWhichGuidePage3: not");
+                    Toast.makeText(mContext, "必须绑定sim卡，才能继续设置", Toast.LENGTH_LONG).show();
+                    mCurrGuidePosition--;
                     return;
                 }
                 showGuardPwdGuide3();
                 break;
-            case 4:
+            case 3:
                 //如果没有设置安全号码，不给第四步
-                if (safeNum == 0) {
+                if (TextUtils.isEmpty(safeNum)) {
                     return;
                 }
                 //插入安全号码到sqlite
@@ -133,29 +142,6 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
             //手机防盗向导第二步
             case R.id.btn_guide1_nextGuide2:
                 showGuardPwdGuide2();
-                break;
-            //点击绑定sim卡
-            case R.id.reL_band_sim:
-                isBandSim = !isBandSim;
-                CheckBox checkB_state_bandSim = (CheckBox) v.findViewById(R.id.checkB_state_bandSim);
-                checkB_state_bandSim.setChecked(isBandSim);
-                insert2sqlite(Constant.KEY_ISBANDSIM, isBandSim);
-                //保存sim的唯一标识
-                TelephonyManager tlpManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-                String simUniqueSign = null;
-                simUniqueSign = tlpManager.getLine1Number();
-                //为null，则不保存
-                if (simUniqueSign == null || TextUtils.isEmpty(simUniqueSign)) {
-                    simUniqueSign = tlpManager.getSimSerialNumber();
-                    if (simUniqueSign == null || TextUtils.isEmpty(simUniqueSign)) {
-                        return;
-                    } else {
-                        insert2sqlite(Constant.KEY_STRING_SIMUNIQUESIGN, simUniqueSign);
-                    }
-                } else {
-                    insert2sqlite(Constant.KEY_STRING_SIMUNIQUESIGN, simUniqueSign);
-                }
-
                 break;
             case R.id.btn_backGuide:
                 mCurrGuidePosition--;
@@ -194,10 +180,16 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
                         //提示：JPH手机防盗app已充当设备管理器,对手机的控制功能已生效
                         Toast.makeText(getApplicationContext(), "JPH手机防盗app已充当设备管理器,对手机的控制功能已生效"
                                 , Toast.LENGTH_LONG).show();
-                        finish();
                     }
+                } else {
+                    //提示：JPH手机防盗app对手机的控制功能不能使用
+                    Toast.makeText(getApplicationContext(), "JPH手机防盗app对手机的控制功能的已经开启"
+                            , Toast.LENGTH_LONG).show();
                 }
 
+                insert2sqlite(Constant.KEY_ISGUIDED,true);//已经设置过防盗向导了
+                insert2sqlite(Constant.KEY_ISOPENGUARD,mIsOpenGuard);//防盗向导开启or关闭
+                finish();
                 break;
         }
         lightPointView.setCurrLightPosition(mCurrGuidePosition);
@@ -225,12 +217,50 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
 
         //添加第二步界面到主页面
         View page_guide2 = getLayoutInflater().inflate(R.layout.activity_replace_guardpwd_guide2, linearL_root_guardTheft);
+        //获取设置状态view
+        final SingleLineSelectLayout stateSelectLayout = (SingleLineSelectLayout) page_guide2.findViewById(R.id.guardPwd_guide2_settingStateLayout);
 
         //获取sqlite中是否绑定了sim
-        boolean isBandSim = (boolean) obtainFromSqlite(Constant.KEY_ISBANDSIM);
-        View reL_band_sim = page_guide2.findViewById(R.id.reL_band_sim);
-        CheckBox checkB_isBandSim = (CheckBox) reL_band_sim.findViewById(R.id.checkB_state_bandSim);
-        checkB_isBandSim.setChecked(isBandSim);
+        mIsBandSim = (boolean) obtainFromSqlite(Constant.KEY_ISBANDSIM);
+        stateSelectLayout.setOpenState(mIsBandSim);//当前设置开启没
+        stateSelectLayout.setSecondSettingState(false);//是否有第二级设置
+        stateSelectLayout.setSummaryTitle(mIsBandSim==true?"绑定":"未绑定");//副标题
+        stateSelectLayout.setConnect(new OnCallListener() {
+            @Override
+            public void onCall(View v,String order) {
+                switch (order) {
+                    case SingleLineSelectLayout.OPENSTARTSTRING:
+                        Log.i(TAG, "onCall: OPENSTARTSTRING");
+                        mIsBandSim = true;
+                        insert2sqlite(Constant.KEY_ISBANDSIM, mIsBandSim);
+                        //更新副标题
+                        stateSelectLayout.setSummaryTitle("绑定");
+                        //保存sim的唯一标识
+                        TelephonyManager tlpManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+                        String simUniqueSign = null;
+                        simUniqueSign = tlpManager.getLine1Number();
+                        //获取不到电话号码，则获取唯一标识码
+                        if (simUniqueSign == null || TextUtils.isEmpty(simUniqueSign)) {
+                            simUniqueSign = tlpManager.getSimSerialNumber();
+                            if (simUniqueSign == null || TextUtils.isEmpty(simUniqueSign)) {
+                                insert2sqlite(Constant.KEY_STRING_SIMUNIQUESIGN, null);
+                            } else {
+                                insert2sqlite(Constant.KEY_STRING_SIMUNIQUESIGN, simUniqueSign);
+                            }
+                        } else {
+                            insert2sqlite(Constant.KEY_STRING_SIMUNIQUESIGN, simUniqueSign);
+                        }
+                        break;
+                    case SingleLineSelectLayout.CLOSESTARTSTRING:
+                        Log.i(TAG, "onCall: CLOSESTARTSTRING");
+                        mIsBandSim = false;
+                        insert2sqlite(Constant.KEY_ISBANDSIM, mIsBandSim);
+                        insert2sqlite(Constant.KEY_STRING_SIMUNIQUESIGN, null);
+                        stateSelectLayout.setSummaryTitle("未绑定");
+                        break;
+                }
+            }
+        });
 
         //设置当前第几步
         mCurrGuidePosition = 1;
@@ -266,13 +296,14 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
         Button btn_preGuide1 = (Button) findViewById(R.id.btn_backGuide);
         Button btn_nextGuide3 = (Button) findViewById(R.id.btn_nextGuide);
 
-        reL_band_sim.setOnClickListener(this);
+//        reL_band_sim.setOnClickListener(this);
         btn_preGuide1.setOnClickListener(this);
         btn_nextGuide3.setOnClickListener(this);
     }
 
     //第三步
     private void showGuardPwdGuide3() {
+        mCurrGuidePosition = 2;
         linearL_root_guardTheft.removeAllViews();
         //添加第三步界面到主页面
         View page_guide3 = getLayoutInflater().inflate(R.layout.activity_replace_guardpwd_guide3, linearL_root_guardTheft);
@@ -283,11 +314,13 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
         Button btn_nextGuide3 = (Button) page_guide3.findViewById(R.id.btn_nextGuide);
 
         //获取设置的安全号码
-        safeNum = (int) obtainFromSqlite(Constant.KEY_INTSAFENUM);
+        safeNum = (String) obtainFromSqlite(Constant.KEY_INTSAFENUM);
         mEditT_input_safeNum.setText(safeNum);
         //点击：前一页or后一页
         btn_preGuide1.setOnClickListener(this);
         btn_nextGuide3.setOnClickListener(this);
+        //从本地选择联系人作为安全号码
+        btn_choose_contacts.setOnClickListener(this);
     }
 
     @Override
@@ -298,11 +331,20 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
                 return;
             }
             Uri uri = data.getData();
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            String number_contact = null;
+            ContentResolver cr = getContentResolver();
+            Cursor cursor = cr.query(uri, null, null, null, null);
+
             if (cursor.moveToFirst()) {
-                number_contact = cursor.getString(cursor.getColumnIndexOrThrow(Contacts.People.Phones.NUMBER));
-                mEditT_input_safeNum.setText(number_contact);
+                //取得电话号码
+                String ContactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                Cursor phone_cursor = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + ContactId, null, null);
+                if (phone_cursor != null) {
+                    if (phone_cursor.moveToFirst()) {
+                        safeNum = phone_cursor.getString(phone_cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        mEditT_input_safeNum.setText(safeNum);
+                    }
+                }
             } else {
                 Toast.makeText(getApplicationContext(), "无号码", Toast.LENGTH_SHORT).show();
             }
@@ -356,14 +398,22 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
         RelativeLayout reL_openGuard = (RelativeLayout) page_guide4.findViewById(R.id.reL_openGuard);
         Button btn_end_guardGuide = (Button) page_guide4.findViewById(R.id.btn_end_guardGuide);
         CheckBox checkB_state_isOpenGuard = (CheckBox) page_guide4.findViewById(R.id.checkB_state_isOpenGuard);
-        TextView textV_isOpenGuard = (TextView) page_guide4.findViewById(R.id.textv_isOpenGuard);
+        final TextView textV_isOpenGuard = (TextView) page_guide4.findViewById(R.id.textv_isOpenGuard);
         //是否开了手机防盗
         mIsOpenGuard = (boolean) obtainFromSqlite(Constant.KEY_ISOPENGUARD);
         checkB_state_isOpenGuard.setChecked(mIsOpenGuard);
         textV_isOpenGuard.setText(mIsOpenGuard == true ? "手机防盗已开启" : "手机防盗已关闭");
+        //勾选，显示开启or关闭
+        checkB_state_isOpenGuard.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mIsOpenGuard = isChecked;
+                textV_isOpenGuard.setText(mIsOpenGuard == true ? "手机防盗已开启" : "手机防盗已关闭");
+            }
+        });
 
-        //点击
-        reL_openGuard.setOnClickListener(this);
+
+        //点击，结束防盗向导设置
         btn_end_guardGuide.setOnClickListener(this);
     }
 
@@ -386,29 +436,17 @@ public class GuardTheftActivity extends Activity implements View.OnClickListener
         return "";
     }
 
-    private void getDefaultSqlite() {
-        if (mSharedPreferences == null) {
-            mSharedPreferences = getSharedPreferences(Constant.NAME_APPCONFIG, MODE_PRIVATE);
-        }
-    }
-
     /**
      * 插入数据到默认sqlite
      */
     private void insert2sqlite(String key, Object data) {
-        getDefaultSqlite();
-        SharedPreferences.Editor edit = mSharedPreferences.edit();
-        if (data instanceof Boolean) {
-            edit.putBoolean(key, (Boolean) data);
-        }
-        edit.commit();
+        new AppConfig(mContext);
+        AppConfig.insert2sqlite(key, data);
+
     }
 
     private Object obtainFromSqlite(String key) {
-        getDefaultSqlite();
-        if (key.contains("is")) {
-            return mSharedPreferences.getBoolean(key, false);
-        }
-        return null;
+        new AppConfig(mContext);
+        return AppConfig.obtainFromSqlite(key);
     }
 }

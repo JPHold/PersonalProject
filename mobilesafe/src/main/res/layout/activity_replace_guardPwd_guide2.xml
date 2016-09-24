@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,28 +14,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <RelativeLayout
-            android:id="@+id/reL_band_sim"
+        <com.hjp.mobilesafe.customview.SingleLineSelectLayout
+            android:id="@+id/guardPwd_guide2_settingStateLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="80dp"
+            app:mainTitle="点击绑定sim卡"
 
-            <TextView
-                android:layout_width="600px"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingLeft="10dp"
-                android:text="点击绑定sim卡" />
+            android:background="@color/colorPrimary"/>
 
-            <CheckBox
-                android:id="@+id/checkB_state_bandSim"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:paddingRight="10dp" />
-        </RelativeLayout>
-        <include android:id="@+id/guardPwd_guide2_backAndNextBtn" layout="@layout/common_guardpwd_guide"/>
+        <include
+            android:id="@+id/guardPwd_guide2_backAndNextBtn"
+            layout="@layout/common_guardpwd_guide" />
     </LinearLayout>
 
 </ScrollView>

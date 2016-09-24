@@ -8,9 +8,9 @@ import android.util.DisplayMetrics;
  */
 public class ScreenUtils {
 
-    private static int SCREENW;
-    private static int SCREENH;
-    private static float SCREENDENSITY;
+    private static int SCREENW=-1;
+    private static int SCREENH=-1;
+    private static float SCREENDENSITY=-1;
 
     public static void initScreen(Activity activity) {
         DisplayMetrics metrics = new DisplayMetrics();

@@ -6,12 +6,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -28,6 +27,7 @@ import com.hjp.mobilesafe.adapter.MainFunctionAdapter;
 import com.hjp.mobilesafe.constant.Constant;
 import com.hjp.mobilesafe.utils.AppConfig;
 import com.hjp.mobilesafe.utils.ScreenUtils;
+import com.hjp.mobilesafe.utils.ShowAppShortCut;
 
 /**
  * Created by HJP on 2016/8/19 0019.
@@ -37,11 +37,13 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
 
     private static final String TAG = "MainActivity";
 
+    private View rootLayout;
     private GridView gridV_main_function;
     private Context mContext;
     private MainFunctionAdapter mMainFunctionAdapter;
     private Dialog mDialog_input_guard_pwd;
     private Dialog mDialog_set_guard_pwd;
+    private PopupWindow ppW_command_guardPwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +51,11 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
         setContentView(R.layout.activity_main);
         initView();
 
+        ShowAppShortCut.show(mContext);
     }
 
     private void initView() {
+        rootLayout = findViewById(R.id.mainActivity_rootLayout);
         gridV_main_function = (GridView) findViewById(R.id.gridV_main_function);
         mContext = getApplicationContext();
         mMainFunctionAdapter = new MainFunctionAdapter(mContext);
@@ -66,20 +70,35 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
                 Log.i(TAG, "onItemClick: showLostFindDialog");
                 showLostFindDialog();
                 break;
+
+            case 1://号码黑名单
+                jump2Activity(CommunicationActivity.class);
+                break;
+            case 2:
+                jump2Activity(AppManagerActivity.class);
+                break;
+            case 3:
+                jump2Activity(ProcessManagerActivity.class);
+                break;
+            case 4:
+                jump2Activity(TrafficManagerActivity.class);
+                break;
             case 7://高级工具
                 Log.i(TAG, "onItemClick:jump2Activity ");
                 jump2Activity(AdvancedToolActivity.class);
+                break;
+            case 8://设置中心
+                jump2Activity(SettingActivity.class);
                 break;
         }
     }
 
     private void showLostFindDialog() {
-        Log.i(TAG, "showLostFindDialog: " + 1);
-        SharedPreferences config = getSharedPreferences(Constant.NAME_APPCONFIG, MODE_PRIVATE);
-        Log.i(TAG, "showLostFindDialog: " + 2);
-        String lostFindPwd = config.getString(Constant.KEY_GUARDPWD, null);
+        new AppConfig(mContext);
+
+        String lostFindPwd = (String) AppConfig.obtainFromSqlite(Constant.KEY_GUARDPWD);
         Log.i(TAG, "showLostFindDialog: " + 3);
-       /* if (!TextUtils.isEmpty(lostFindPwd)) {
+        if (!TextUtils.isEmpty(lostFindPwd)) {
             //Dialog：输入密码
             Log.i(TAG, "showLostFindDialog: " + 4);
             showInputPwdDialog();
@@ -87,17 +106,16 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
             //Dialog：设置密码
             Log.i(TAG, "showLostFindDialog: " + 5);
             showSetPwdDialog();
-        }*/
-        Log.i(TAG, "showLostFindDialog: " + lostFindPwd);
-        showSetPwdDialog();
+        }
     }
 
     private void showInputPwdDialog() {
         View layout_input_guard_pwd = getLayoutInflater().inflate(R.layout.dialog_guard_theft_input_pwd, null, false);
         final EditText editT_input_pwd = (EditText) layout_input_guard_pwd.findViewById(R.id.editT_dialog_input_pwd);
         //密码正确
-        mDialog_input_guard_pwd = new AlertDialog.Builder(mContext)
+        mDialog_input_guard_pwd = new AlertDialog.Builder(this)
                 .setTitle("输入防盗密码")
+                .setView(layout_input_guard_pwd)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -106,10 +124,13 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
                             Toast.makeText(mContext, "密码为空", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        SharedPreferences sharedPreferences = getSharedPreferences(Constant.NAME_APPCONFIG, MODE_PRIVATE);
-                        String local_guard_Pwd = sharedPreferences.getString(Constant.KEY_GUARDPWD, null);
+
+                        new AppConfig(mContext);
+                        String local_guard_Pwd = (String) AppConfig.obtainFromSqlite(Constant.KEY_GUARDPWD);
+
                         if (TextUtils.isEmpty(local_guard_Pwd)) {
                             Toast.makeText(mContext, "本地密码未设置", Toast.LENGTH_SHORT).show();
+
                             return;
                         }
                         if (!local_guard_Pwd.equals(guardPwd)) {
@@ -127,9 +148,9 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
                         WebView webV_command_guardPwd = (WebView) popLayout_guardPwd_usage.findViewById(R.id.webV_command_guardPwd);
                         //重新设置手机防盗向导
                         btn_restart_guard_guide.setOnClickListener(MainActivity.this);
-                        AppConfig appConfig = new AppConfig(mContext);
+                        new AppConfig(mContext);
                         //显示安全号码
-                        int safeNum = (int) AppConfig.obtainFromSqlite(Constant.KEY_INTSAFENUM);
+                        String safeNum = (String) AppConfig.obtainFromSqlite(Constant.KEY_INTSAFENUM);
                         textV_guardPwd_safeNum.setText(safeNum);
                         //显示是否开了手机防盗
                         boolean isOpenGuard = (boolean) AppConfig.obtainFromSqlite(Constant.KEY_ISOPENGUARD);
@@ -137,21 +158,23 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
                         //显示指令
                         webV_command_guardPwd.loadUrl("file:///android_asset/command_guardpwd.html");
 
-                        PopupWindow ppW_command_guardPwd = new PopupWindow(popLayout_guardPwd_usage);
+                        ppW_command_guardPwd = new PopupWindow(popLayout_guardPwd_usage);
 
-                        //制作从下往上弹出pop的动画
-                        TranslateAnimation tlAnim = new TranslateAnimation(getApplicationContext(), null);
-                        tlAnim.setDuration(2000);
-                        //自动计算初始位置和终点位置
-                        tlAnim.initialize((int) (500 * ScreenUtils.getScreenDensity()), (int) (300 * ScreenUtils.getScreenDensity())
-                                , ScreenUtils.getScreenW(), ScreenUtils.getScreenH());
+//                        ppW_command_guardPwd.setAnimationStyle(R.style.anim_ppW);
+                        ppW_command_guardPwd.setFocusable(true);
+                        ppW_command_guardPwd.setOutsideTouchable(true);
+                        ppW_command_guardPwd.setBackgroundDrawable(new BitmapDrawable());
+
+                        ScreenUtils.initScreen(MainActivity.this);
+                        ppW_command_guardPwd.setWidth(ScreenUtils.getScreenW());
+                        ppW_command_guardPwd.setHeight(ScreenUtils.getScreenH() / 2);
+
                         //当前Activity的decoderView
                         View rootView = findViewById(android.R.id.content);
-                        ppW_command_guardPwd.showAsDropDown(rootView);
+                        ppW_command_guardPwd.showAsDropDown(rootView, 0, -500);
                     }
                 })
                 .create();
-//        mDialog_input_guard_pwd.setContentView(layout_input_guard_pwd);
         mDialog_input_guard_pwd.show();
 
     }
@@ -181,7 +204,7 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
                             return;
                         }
                         new AppConfig(mContext);
-                        AppConfig.insert2sqlite(Constant.KEY_GUARDPWD,guardPwd_2);
+                        AppConfig.insert2sqlite(Constant.KEY_GUARDPWD, guardPwd_2);
 
                         //手机防盗向导开始
                         StartGuardGuide();
@@ -217,6 +240,10 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
         int id = v.getId();
         switch (id) {
             case R.id.btn_restart_guard_guide:
+                //重置防盗向导标志
+                new AppConfig(mContext);
+                AppConfig.insert2sqlite(Constant.KEY_ISGUIDED, false);
+                //跳转到防盗向导页面com/hjp/mobilesafe/activity/GuardTheftActivity
                 StartGuardGuide();
                 break;
         }
@@ -226,13 +253,21 @@ public class MainActivity extends Activity implements GridView.OnItemClickListen
      * 手机防盗向导开始
      */
     private void StartGuardGuide() {
-        mDialog_set_guard_pwd.dismiss();
+
+        //第一次设置防盗向导
+        if (mDialog_set_guard_pwd != null) {
+            mDialog_set_guard_pwd.dismiss();
+        } else {
+            //重新设置防盗向导
+            if (ppW_command_guardPwd != null) {
+                ppW_command_guardPwd.dismiss();
+            }
+        }
         Log.i(TAG, "StartGuardGuide: 5");
         Intent intent = new Intent(MainActivity.this, GuardTheftActivity.class);
         Log.i(TAG, "StartGuardGuide: 6");
         MainActivity.this.startActivity(intent);
         Log.i(TAG, "StartGuardGuide: 7");
-        finish();
     }
 
     /**

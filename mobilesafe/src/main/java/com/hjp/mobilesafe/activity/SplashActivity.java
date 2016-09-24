@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.hjp.mobilesafe.R;
+import com.hjp.mobilesafe.service.UpdateAppWidgetProcessInfoService;
 
 /**
  * Created by HJP on 2016/8/19 0019.
@@ -22,6 +23,7 @@ import com.hjp.mobilesafe.R;
 public class SplashActivity extends Activity {
     private TextView textV_splash_version;
     private Object appVersion;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
@@ -35,8 +37,12 @@ public class SplashActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
+        //定时更新微件-进程信息
+        Intent updateAppWidgetProcessInfos = new Intent(SplashActivity.this, UpdateAppWidgetProcessInfoService.class);
+        startService(updateAppWidgetProcessInfos);
+
         //到主页面
-        Intent intent=new Intent(SplashActivity.this,MainActivity.class);
+        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         startActivity(intent);
         finish();
     }
@@ -44,7 +50,7 @@ public class SplashActivity extends Activity {
     private void initView() {
         textV_splash_version = (TextView) findViewById(R.id.textV_splash_version);
         String appVersion = getAppVersion();
-        textV_splash_version.setText("版本号："+appVersion);
+        textV_splash_version.setText("版本号：" + appVersion);
     }
 
     private String getAppVersion() {

@@ -12,6 +12,7 @@ import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.telephony.SmsManager;
+import android.util.Log;
 
 import com.hjp.mobilesafe.constant.Constant;
 import com.hjp.mobilesafe.utils.AppConfig;
@@ -25,6 +26,7 @@ public class GuardGpsObtainService extends Service {
 
     private LocationManager mLcManager;
     private LocationListener mLocationListener;
+    private String TAG = "GuardGpsObtainService";
 
     @Override
     public void onCreate() {
@@ -50,8 +52,8 @@ public class GuardGpsObtainService extends Service {
                     e.printStackTrace();
                 }
 
-
-                SmsManager.getDefault().sendTextMessage(safeNum, null, location_theft, null, null);
+                Log.i(TAG, "onLocationChanged:地址 " + location_theft);
+                SmsManager.getDefault().sendTextMessage("5554", null, location_theft, null, null);//测试而已
 
                 //先检测location权限是否被允许了，这样可以避免安全错误
                 boolean isGranted = checkPermission(mLcManager);
@@ -64,7 +66,8 @@ public class GuardGpsObtainService extends Service {
             public void onStatusChanged(String provider, int status, Bundle extras) {
                 //gps没开启或者gps的提供方没响应
                 if (status == LocationProvider.OUT_OF_SERVICE || status == LocationProvider.TEMPORARILY_UNAVAILABLE) {
-                    SmsManager.getDefault().sendTextMessage(safeNum, null, "无法获知地理位置", null, null);
+                    Log.i(TAG, "onStatusChanged: gps没开启或者gps的提供方没响应");
+                    SmsManager.getDefault().sendTextMessage("5554", null, "无法获知地理位置", null, null);//测试而已
                 }
             }
 
@@ -75,7 +78,7 @@ public class GuardGpsObtainService extends Service {
 
             @Override
             public void onProviderDisabled(String provider) {
-                SmsManager.getDefault().sendTextMessage(safeNum, null, "无法获知地理位置", null, null);
+                SmsManager.getDefault().sendTextMessage("5554", null, "无法获知地理位置", null, null);//测试而已
             }
         };
 
@@ -90,13 +93,14 @@ public class GuardGpsObtainService extends Service {
             criteria.setBearingRequired(false);//无需方位
             criteria.setPowerRequirement(Criteria.POWER_LOW);//电量要求
             criteria.setCostAllowed(true);//是否付费
-            mLcManager.getBestProvider(criteria, true);
+            String bestProvider = mLcManager.getBestProvider(criteria, true);
+            Log.i(TAG, "onCreate: 提供方" + bestProvider);
             //注册地理位置监听器
-            mLcManager.requestLocationUpdates("gps", 0, 0, mLocationListener);
+            mLcManager.requestLocationUpdates(bestProvider, 0, 0, mLocationListener);
         }
 
         //发给安全号码：无法获知地理位置
-        SmsManager.getDefault().sendTextMessage(safeNum, null, "无法获知地理位置", null, null);
+        SmsManager.getDefault().sendTextMessage("5554", null, "无法获知地理位置", null, null);//测试而已
     }
 
     @Override

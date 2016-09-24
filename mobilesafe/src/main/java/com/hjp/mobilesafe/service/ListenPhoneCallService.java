@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.hjp.mobilesafe.broadcastReceiver.OutPhoneCallReceiver;
 import com.hjp.mobilesafe.listener.PhoneCallListener;
@@ -18,6 +19,8 @@ import com.hjp.mobilesafe.listener.PhoneCallListener;
  * 在设置中心开启/关闭这个服务，要通过ComponentState判断服务是否被停止
  */
 public class ListenPhoneCallService extends Service {
+
+    private static final String TAG = "ListenPhoneCallService";
     private TelephonyManager tm;
     private PhoneCallListener mCallListener;
     private OutPhoneCallReceiver mOutPhoneCallReceiver;
@@ -25,6 +28,7 @@ public class ListenPhoneCallService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.i(TAG, "onCreate: ");
         tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         mCallListener = new PhoneCallListener(getApplicationContext());
         //监听来电

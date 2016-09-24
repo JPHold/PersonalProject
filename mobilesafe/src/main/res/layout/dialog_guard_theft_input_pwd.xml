@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="#FFFFFF"><!--在2.3系统中Dialog默认背景为黑色-->
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="20dp"><!--在2.3系统中Dialog默认背景为黑色-->
 
-        <EditText
-            android:id="@+id/editT_dialog_input_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="输入密码"/>
+    <EditText
+        android:id="@+id/editT_dialog_input_pwd"
+        style="@android:style/Widget.DeviceDefault.Light.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入密码" />
 </LinearLayout>

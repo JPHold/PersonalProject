@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.provider.Telephony;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 import com.hjp.mobilesafe.R;
 
 import com.hjp.mobilesafe.constant.Constant;
+import com.hjp.mobilesafe.database.dao.BlackListQueryDao;
 import com.hjp.mobilesafe.service.GuardGpsObtainService;
 import com.hjp.mobilesafe.utils.AppConfig;
 
@@ -22,11 +26,14 @@ import com.hjp.mobilesafe.utils.AppConfig;
 
 public class ReceiveSmsReceiver extends BroadcastReceiver {
 
+    private static String TAG = "ReceiveSmsReceiver";
     private DevicePolicyManager mDevicePolicyManager;
     private boolean mIsActivation;
 
     @Override
     public void onReceive(final Context context, Intent intent) {
+
+
         AppConfig appConfig = new AppConfig(context);
 
         //得知是否开了防盗保护
@@ -34,21 +41,37 @@ public class ReceiveSmsReceiver extends BroadcastReceiver {
         //手机没丢时，为了不妨碍正常的信息接收，需要判断SIM卡是否变更
         boolean isSimChange = (boolean) AppConfig.obtainFromSqlite(Constant.KEY_ISSIMCHANGE);
         //SIM卡变更了
-        if (isOpenGuard && isSimChange) {
+        if (isOpenGuard && true) {//测试而已
             Object[] pdus = (Object[]) intent.getExtras().get("pdus");
             for (Object pdu : pdus) {
                 SmsMessage fromPdu = SmsMessage.createFromPdu((byte[]) pdu);
                 //得知发送者号码
                 String sender = fromPdu.getOriginatingAddress();
+
+
+                //是否在号码黑名单中
+                BlackListQueryDao blackListQueryDao = new BlackListQueryDao(context);
+                String exist = blackListQueryDao.queryBlackListPartExist(sender);
+
+                //在号码黑名单中，则不用进行号码来源
+                if ("短信".equals(exist) || "电话+短信".equals(exist)) {
+                    //拦截短信，原生短信并存在自己的数据库里(防止误删)
+                    abortBroadcast();
+                    return;
+                }
+
+
                 //获取安全号码
                 final String safeNum = (String) AppConfig.obtainFromSqlite(Constant.KEY_INTSAFENUM);
+
                 //比较是否相等
-                if (sender.equals(safeNum)) {
+                if (sender.equals("5554")) {//测试而已
                     //得知信息
                     String msg = fromPdu.getMessageBody();
                     switch (msg) {
                         case "#location#":
                             //发送地理位置
+                            Log.i(TAG, "onReceive:发送地理位置");
                             Intent intent_sendLoc = new Intent(context, GuardGpsObtainService.class);
                             context.startService(intent_sendLoc);
                             break;
@@ -77,6 +100,7 @@ public class ReceiveSmsReceiver extends BroadcastReceiver {
                             //得到设备管理器
                             getDevicePolicyManager(context);
                             //得知是否激活了设备管理器
+                            isDevicePolicyActivation(context);
                             if (mIsActivation) {
                                 ComponentName component_lockScreen = new ComponentName(context, GuardDeviceAdminReceiver.class);
                                 mDevicePolicyManager.setMaximumTimeToLock(component_lockScreen, 0);//多久才锁屏

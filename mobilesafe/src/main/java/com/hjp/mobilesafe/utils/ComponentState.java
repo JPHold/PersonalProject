@@ -1,5 +1,6 @@
 package com.hjp.mobilesafe.utils;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 
@@ -20,6 +21,7 @@ public class ComponentState {
      */
     //因为在应用管理中，可以关闭服务。当用户手动关闭服务时，app不做处理的话，依然还是显示服务开启中
     public static boolean checkServiceState(Context context, String serviceName) {
+        getActivityManager(context, Activity.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> runningServices = mAm.getRunningServices(100);//取最新的100个服务
         for (ActivityManager.RunningServiceInfo rs : runningServices) {
             if (rs.service.getShortClassName().equals(serviceName)) {

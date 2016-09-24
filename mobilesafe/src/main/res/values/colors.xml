@@ -5,4 +5,13 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorDarkCirclePoint">#878787</color>
     <color name="colorLightCirclePoint">#e7f132</color>
+
+    <!--电话来源的提示信息的颜色
+        依次为红、黄、绿、蓝、黑-->
+    <color name="pop_phoneSource_color1">#FF0000</color>
+    <color name="pop_phoneSource_color2">#FFFF00</color>
+    <color name="pop_phoneSource_color3">#008000</color>
+    <color name="pop_phoneSource_color4">#0000FF</color>
+    <color name="pop_phoneSource_color5">#000000</color>
+
 </resources>

@@ -26,7 +26,7 @@ public class LightPointView extends View {
     /**
      * 小圆点的个数
      */
-    private int count_point = 5;
+    private int count_point = 4;
     /**
      * 小圆点之间的间隙
      */
@@ -116,7 +116,7 @@ public class LightPointView extends View {
                 space_point = (valueHorDrawHeight) / (3 * count_point - 1);
             } else if (allCirclePoint_length < valueHorDrawHeight) {
                 //所有小圆点的整个宽度小于横向绘制宽度，则在横向绘制宽度内，居中显示小圆点s
-                space_horDrawWidth_and_circlePoints=(valueHorDrawHeight-allCirclePoint_length)/2;
+                space_horDrawWidth_and_circlePoints = (valueHorDrawHeight - allCirclePoint_length) / 2;
             }
             diameter_circle_point = space_point * 2;
         }
@@ -164,7 +164,7 @@ public class LightPointView extends View {
             } else {
                 paint_circlePoint.setColor(dark_circle_point);
             }
-            x_currStart = (int) (space_horDrawWidth_and_circlePoints+(i + 0.5) * diameter_circle_point + space_point * i);
+            x_currStart = (int) (space_horDrawWidth_and_circlePoints + (i + 0.5) * diameter_circle_point + space_point * i);
             Log.i(TAG, "draw:x_currStart：" + x_currStart);
             canvas.drawCircle(x_currStart, y_currStart, radius_circle_point, paint_circlePoint);
         }
@@ -174,6 +174,9 @@ public class LightPointView extends View {
      * 点亮指定小圆点
      */
     public void setCurrLightPosition(int position) {
+        if (position == position_currpoint) {
+            return;
+        }
         position_currpoint = position;
         postInvalidate();
     }

@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hjp.mobilesafe.R;
-import com.hjp.mobilesafe.listener.CallListener;
+import com.hjp.mobilesafe.listener.OnCallListener;
 
 /**
  * Created by HJP on 2016/8/25 0025.
@@ -26,8 +26,6 @@ import com.hjp.mobilesafe.listener.CallListener;
 public class SingleLineSelectLayout extends LinearLayout implements View.OnClickListener {
 
     private static final String TAG = "SingleLineSelectLayout";
-    private static final String SECONDSETORDER = "secondSet";
-
     private Context mContext;
     private SingleLineSelectLayout mSingleLineLayout;
     private RelativeLayout mSingleLineContentLayout;
@@ -50,8 +48,14 @@ public class SingleLineSelectLayout extends LinearLayout implements View.OnClick
     /**
      * 开启和关闭的字符串
      */
-    private static final String OPENSTARTSTRING = "开启";
-    private static final String CLOSESTARTSTRING = "关闭";
+    public static final String OPENSTARTSTRING = "开启";
+    public static final String CLOSESTARTSTRING = "关闭";
+    /**
+     * 第二级设置跳转的通知
+     */
+    public static final String SECONDSETORDER = "secondSet";
+
+
     private ColorFilter mColorFilter;
     private boolean mHasColorFilter = false;
     private boolean mColorMod = false;
@@ -65,7 +69,7 @@ public class SingleLineSelectLayout extends LinearLayout implements View.OnClick
     private int height_summaryTitle = 0;
     private float y_mainTitle = 0;
     private float y_summaryTitle = 0;
-    private CallListener mCallListener;
+    private OnCallListener mOnCallListener;
 
     public SingleLineSelectLayout(Context context) {
         this(context, null);
@@ -116,9 +120,16 @@ public class SingleLineSelectLayout extends LinearLayout implements View.OnClick
      * @param mainTitle 标题名
      */
     public void setMainTitle(String mainTitle) {
-        if (TextUtils.isEmpty(mainTitle) || mainTitle.equals(mMainTitle)) {
+        boolean empty = TextUtils.isEmpty(mainTitle);
+        if (empty) {
             return;
         }
+
+        boolean equals = mainTitle.equals(mTextV_title.getText().toString());
+        if (equals) {
+            return;
+        }
+        //不相等，才重新赋值
         mMainTitle = mainTitle;
         mTextV_title.setText(mMainTitle);
     }
@@ -129,12 +140,18 @@ public class SingleLineSelectLayout extends LinearLayout implements View.OnClick
      * @param summaryTitle 副标题
      */
     public void setSummaryTitle(String summaryTitle) {
-        if (TextUtils.isEmpty(summaryTitle) || summaryTitle.equals(mSummaryTitle)) {
+        boolean empty = TextUtils.isEmpty(summaryTitle);
+        if (empty) {
             return;
         }
+
+        boolean equals = summaryTitle.equals(mTextV_summary.getText().toString());
+        if (equals) {
+            return;
+        }
+        //不相等，才重新赋值
         mSummaryTitle = summaryTitle;
         mTextV_summary.setText(mSummaryTitle);
-
     }
 
     /**
@@ -145,30 +162,37 @@ public class SingleLineSelectLayout extends LinearLayout implements View.OnClick
         if (childView instanceof CheckBox) {
             Log.i(TAG, "onClickStateChange:CheckBox ");
             mIsSettingOpen = !mIsSettingOpen;
-            mSummaryTitle = mIsSettingOpen == true ? mSummaryTitle.replace(CLOSESTARTSTRING, OPENSTARTSTRING)
-                    : mSummaryTitle.replace(OPENSTARTSTRING, CLOSESTARTSTRING);//替换开启或者关闭
-            //设置副标题，显示设置是开启还是关闭
-            mTextV_summary.setText(mSummaryTitle);
+
+            if (!TextUtils.isEmpty(mSummaryTitle)) {
+                mSummaryTitle = mIsSettingOpen == true ? mSummaryTitle.replace(CLOSESTARTSTRING, OPENSTARTSTRING)
+                        : mSummaryTitle.replace(OPENSTARTSTRING, CLOSESTARTSTRING);//替换开启或者关闭
+                //设置副标题，显示设置是开启还是关闭
+                mTextV_summary.setText(mSummaryTitle);
+            }
+
             ((CheckBox) childView).setChecked(mIsSettingOpen);
+            //通知Activity保存设置状态
+            mOnCallListener.onCall(this, mIsSettingOpen == true ? OPENSTARTSTRING : CLOSESTARTSTRING);
+            Log.i(TAG, "onClickStateChange: "+mIsSettingOpen);
         } else if (childView instanceof ImageView) {
             //通知Activity替换第二级设置布局
-            mCallListener.onCall(SECONDSETORDER);
+            mOnCallListener.onCall(this, SECONDSETORDER);
         }
     }
 
     /**
      * 当前设置如果是有第二级设置，则不显示checkBox而是显示箭头图片,反之则显示checkBox而不显示箭头图片
      *
-     * @param isSecondSetting
+     * @param hasSecondSetting
      */
-    public void setSettingState(final boolean isSecondSetting) {
+    public void setSecondSettingState(final boolean hasSecondSetting) {
         Log.i(TAG, "setSettingState: ");
-        //清空设置状态view
+       /* //清空设置状态view
         int childCount = mSingleLineContentLayout.getChildCount();
         Log.i(TAG, "setSettingState:childCount：" + childCount);
         if (childCount == 3) {
             mSingleLineContentLayout.removeViewAt(childCount - 1);
-        }
+        }*/
 
         //提前获知两个标题view的位置参数
         ViewTreeObserver viewTreeObserver_mainTitle = mTextV_title.getViewTreeObserver();
@@ -199,17 +223,15 @@ public class SingleLineSelectLayout extends LinearLayout implements View.OnClick
                         lParams_setting.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                         lParams_setting.setMargins(0, y_settingStateView, 10, 0);
 
-                        if (isSecondSetting) {
+                        if (hasSecondSetting) {
                             ImageView imgV_jump2SecondSetting = new ImageView(mContext);
                             imgV_jump2SecondSetting.setImageResource(R.mipmap.singlelineselect_secondsetting);
-
+                            Log.i(TAG, "onGlobalLayout: ImageView");
                             mSingleLineContentLayout.addView(imgV_jump2SecondSetting, lParams_setting);
                         } else {
                             CheckBox checkBox = new CheckBox(mContext);
                             checkBox.setChecked(mIsSettingOpen);
                             checkBox.setGravity(Gravity.CENTER);
-                            checkBox.setPadding(10, 10, 10, 10);
-                            checkBox.setButtonDrawable(0);
                             mSingleLineContentLayout.addView(checkBox, lParams_setting);
                         }
                     }
@@ -229,14 +251,18 @@ public class SingleLineSelectLayout extends LinearLayout implements View.OnClick
         mIsSettingOpen = isOpen;
     }
 
+    public boolean getOpenState() {
+        return mIsSettingOpen;
+    }
+
     @Override
     public void onClick(View v) {
         Log.i(TAG, "onClick: ");
         onClickStateChange();
     }
 
-    public void setConnect(CallListener callListener) {
-        mCallListener = callListener;
+    public void setConnect(OnCallListener onCallListener) {
+        mOnCallListener = onCallListener;
     }
 
  /*   private void applyImageTint() {

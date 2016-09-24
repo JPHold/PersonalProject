@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hjp.mobilesafe">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--存储数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--读取SIM卡信息，用于保存SIM的唯一凭证-->
@@ -22,7 +23,16 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!--播出电话的广播-->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-
+    <!--读取联系人-->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!--短信备份模块-->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <!--获取运行内存(ram)的使用情况-->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--进程清理的权限-->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <!--创建app快捷方式-->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -37,13 +47,31 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="com.shortcut.main" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <!--防盗向导Activity-->
         <activity android:name=".activity.GuardTheftActivity" />
+        <!--应用管理Activity-->
+        <activity android:name=".activity.AppManagerActivity" />
+        <!--进程管理Activity-->
+        <activity android:name=".activity.ProcessManagerActivity" />
         <!--高级工具Activity-->
         <activity android:name=".activity.AdvancedToolActivity" />
-
+        <!--设置Activity-->
+        <activity android:name=".activity.SettingActivity" />
+        <activity android:name=".activity.CommunicationActivity" />
+        <!--程序锁ctivity-->
+        <activity android:name=".lock.LockMainActivity" />
+        <!--流量统计Activity-->
+        <activity android:name=".activity.TrafficManagerActivity" />
+        <activity
+            android:name=".lock.LockActivity"
+            android:launchMode="singleInstance" />
         <!--开机广播-->
         <receiver android:name=".broadcastReceiver.BootStrapReceiver">
             <intent-filter>
@@ -71,8 +99,25 @@
             </intent-filter>
         </receiver>
 
+        <!--微件-->
+        <receiver android:name=".broadcastReceiver.ProcessClearAppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_process_controll" />
+        </receiver>
+
+        <!--微件-更新进程信息-->
+        <service android:name=".service.UpdateAppWidgetProcessInfoService" />
         <!--发送地理位置到安全号码-->
         <service android:name=".service.GuardGpsObtainService" />
+        <service android:name=".service.ListenPhoneCallService" />
+
+        <service
+            android:name=".lock.WatchDogService"
+            android:process=":watchDog" />
 
     </application>
 

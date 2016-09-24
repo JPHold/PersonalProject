@@ -41,6 +41,23 @@ public class Constant {
     //是否开启电话监听
     public static  final String KEY_ISPHONECALLOPEN="isPhoneCallOpen";
     //号码来源的吐司颜色
-    public static final String KEY_INTPHONESOURCECOLOR="phoneSourceColor";
+    public static final String KEY_STRINGPHONESOURCECOLOR="phoneSourceColor";
+
+
+    /**
+     * 数据库名、数据表名
+     */
+    //号码黑名单数据库：数据库名
+    public static final String  DATABASE_BALCKLIST_NAME="phoneBlackList";
+    //号码黑名单数据库：数据表名
+    public static final String  DATATABLE_BALCKLIST_NAME="phoneBlackList";
+
+    /**
+     * 数据表的字段
+     */
+    //号码黑名单数据表
+    public static final String KEY_BLACKLIST_ID="_id";
+    public static final String KEY_BLACKLIST_PHONE="phonenumber";
+    public static final String  KEY_BLACKLIST_HOLDMODE="holdmode";
 
 }

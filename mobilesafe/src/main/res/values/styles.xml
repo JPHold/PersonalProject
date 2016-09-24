@@ -6,4 +6,16 @@
     </style>
 
     <style name="ArtToast_Animation" parent="android:Animation.Toast"></style>
+
+    <!--做完向导的防盗设置，显示其设置信息-->
+    <style name="anim_ppW">
+        <item name="android:windowEnterAnimation">@anim/guardpwd_guide_pop_in</item>
+        <item name="android:windowExitAnimation">@anim/guardpwd_guide_pop_out</item>
+    </style>
+
+    <style name="ppw_phoneSource_color_choose">
+        <item name="android:windowEnterAnimation">@anim/phonesource_color_choose_pop_in</item>
+        <!--<item name="android:windowExitAnimation">@anim/phonesource_color_choose_pop_out</item>-->
+    </style>
+
 </resources>
