@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/imgV_icon_cell_appList"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/textV_appName_cell_appList"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_alignTop="@id/imgV_icon_cell_appList"
+        android:layout_toRightOf="@id/imgV_icon_cell_appList"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/textV_processSize_cell_appList"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_below="@id/textV_appName_cell_appList"
+        android:layout_toRightOf="@id/imgV_icon_cell_appList"
+        android:gravity="center"
+        android:textColor="#000000" />
+
+    <CheckBox
+        android:id="@+id/checkB_sureProcess_cell_processList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        style="@android:style/Widget.Holo.Light.CompoundButton.CheckBox"/>
+</RelativeLayout>

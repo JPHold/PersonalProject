@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="290dp"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:background="@color/colorAccent">
+
+    <TextView
+        android:id="@+id/textV_appWidget_processCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sssss"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/textV_appWidget_ramFreeSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ssssss"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_appwidget_clearProcess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="清理" />
+</LinearLayout>

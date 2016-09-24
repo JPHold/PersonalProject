@@ -99,4 +99,5 @@ http://shigongbo.blog.163.com/blog/static/976090201452572535715/
 
 17、android防火墙:阻止某个app上网,有如下：
 ①Android应用源码结合droidwall防火墙的流量监控 http://www.codesocang.com/anzhuoyuanma/ruanjian/xitonggongju/10613.html
-②droidwall：它的是实现原理：http://www.tuicool.com/articles/YVj2QjN
+②droidwall：它的是实现原理：http://www.tuicool.com/articles/
+③谷歌项目源码：https://code.google.com/archive/p/droidwall/
