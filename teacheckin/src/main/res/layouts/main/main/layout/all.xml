@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#847979"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y30"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/main_bar_function_img_bg"
+            android:clickable="true"
+            android:scaleType="center" />
+    </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/all_frameLayout_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y310" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y40"
+        android:background="#afaeae"
+        android:orientation="vertical">
+
+        <RadioGroup
+            android:id="@+id/all_radioGroup_tag"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:layout_width="@dimen/x116"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableTop="@drawable/main_tab_check_img_bg"
+                android:gravity="center_horizontal"
+                android:text="首页"
+                android:textColor="@drawable/main_tab_check_text_color" />
+
+            <RadioButton
+                android:layout_width="@dimen/x116"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableTop="@drawable/main_tab_check_img_bg"
+                android:gravity="center_horizontal"
+                android:text="信息"
+                android:textColor="@drawable/main_tab_check_text_color" />
+
+            <RadioButton
+                android:layout_width="@dimen/x116"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableTop="@drawable/main_tab_check_img_bg"
+                android:gravity="center_horizontal"
+                android:text="我"
+                android:textColor="@drawable/main_tab_check_text_color" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/all_progressBar"
+        style="@android:style/Widget.ProgressBar.Inverse"
+        android:layout_width="@dimen/y40"
+        android:layout_height="@dimen/y40"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/y180"
+        android:visibility="invisible"/>
+</LinearLayout>
+
