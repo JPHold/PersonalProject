@@ -8,7 +8,7 @@ public class LoginUrl {
     /**
      *  用户登录地址和请求参数
      */
-    public static final String URL_CHECKTEACHERUSER = "http://"+BaseUrl.LIIP+":8080/CourseCheckIn/tea/login";
+    public static final String URL_CHECKTEACHERUSER = "http://"+BaseUrl.LIIP+"/CourseCheckIn/tea/login";
     public static  final String PARAM_TEA_NUM="num";
     public static  final String PARAM_TEA_PWD="pwd";
 

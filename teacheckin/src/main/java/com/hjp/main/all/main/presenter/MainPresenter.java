@@ -26,7 +26,7 @@ public class MainPresenter{
     }
 
     public void getCourses(){
-        mMainService.getCourses(mMainView.getTeaNum(), new OnCoursesObtainListener() {
+        mMainService.getCourses(mMainView.getTeaNum(), mMainView.getDate(),new OnCoursesObtainListener() {
             @Override
             public void onSuccess(List<String> courseNums,List<String> courseNames) {
                 mMainView.setCourseNames(courseNums,courseNames);

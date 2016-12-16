@@ -1,4 +1,4 @@
-package com.hjp.main.all.main.service.listener;
+package com.hjp.main.all.msg.service.listener;
 
 /**
  * Created by HJP on 2016/12/5.

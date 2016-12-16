@@ -17,12 +17,17 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.OptionsPickerView;
+import com.hjp.ProvinceBean;
 import com.hjp.R;
 import com.hjp.main.all.main.view.fragment.MainFragment;
+import com.hjp.main.all.presenter.AllPresenter;
+import com.hjp.main.all.service.bean.ClassRoom;
+import com.hjp.main.all.service.bean.Course;
+import com.hjp.main.all.service.bean.CoursePart;
+import com.hjp.main.gesture.view.custom.gesturelock.GestureLockViewGroup;
 import com.hjp.others.app.MainApplication;
 import com.hjp.others.app.db.AppConfig;
-import com.hjp.main.gesture.view.custom.gesturelock.GestureLockViewGroup;
-import com.hjp.main.all.presenter.AllPresenter;
 import com.hjp.others.util.CheckUtil;
 import com.hjp.others.util.CutoverUtil;
 import com.hjp.others.util.PopupUtil;
@@ -30,7 +35,11 @@ import com.hjp.others.util.ScreenUtils;
 import com.hjp.others.util.SendInModuleUtil;
 import com.hjp.others.util.UserVerificationUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class AllActivity extends AppCompatActivity implements AllView, RelativeView {
 
@@ -65,6 +74,8 @@ public class AllActivity extends AppCompatActivity implements AllView, RelativeV
     private RadioGroup mRadioGroupTab;
 
     private ProgressBar mProgressBar;
+    private OptionsPickerView mMakeCheckInInfoOptionView;
+    private String mCurrSelectCourseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,20 +99,12 @@ public class AllActivity extends AppCompatActivity implements AllView, RelativeV
         initView();
         getCurrLoginTeacherUser();
         addListener();
-       /* initResource();
-        */
     }
 
 
     private void getCurrLoginTeacherUser() {
         Intent jumpDataIntent = getIntent();
         num = UserVerificationUtil.verifyCurrUserFromIntent(mContext, jumpDataIntent, this);
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 
     /**
@@ -115,6 +118,50 @@ public class AllActivity extends AppCompatActivity implements AllView, RelativeV
         boolean isVerify = mAppConfig.getGestureVerifyState();
         //手势锁开启or关闭
         return mAppConfig.getGestureClockOpen();
+    }
+
+    @Override
+    public void setMakeCheckInCourses(final ArrayList<Course> courseNames, final Map<String, Map<String, Object>> makeCheckInInfoMap) {
+
+        OptionsPickerView courseOptionView = new OptionsPickerView(this);
+        courseOptionView.setTitle("选择需要发布签到的课程");
+//        courseOptionView.setSelectOptions(1);
+        courseOptionView.setPicker(courseNames);
+        courseOptionView.setCyclic(false);
+        courseOptionView.show();
+        courseOptionView.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int courseIndex, int option2, int options3) {
+                String courseId = courseNames.get(courseIndex).getId();
+                mAllPresenter.makeCheckInInfos(courseId, makeCheckInInfoMap);
+            }
+        });
+
+    }
+
+    @Override
+    public void setMakeCheckInInfos
+            (final String selectCourseId, final ArrayList<ClassRoom> classRooms, final ArrayList<ArrayList<String>> weekNums
+                    , final ArrayList<ArrayList<ArrayList<CoursePart>>> courseParts) {
+
+        mMakeCheckInInfoOptionView = new OptionsPickerView(this);
+        mMakeCheckInInfoOptionView.setPicker(classRooms, weekNums, courseParts, true);
+        mMakeCheckInInfoOptionView.setCyclic(false, true, false);
+        mMakeCheckInInfoOptionView.setSelectOptions(0, 0, 0);
+        mMakeCheckInInfoOptionView.show();
+        mMakeCheckInInfoOptionView.setOnoptionsSelectListener(new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3) {
+                mCurrSelectCourseId = selectCourseId;
+                Integer classRoomId = classRooms.get(options1).getId();
+                String weekNum = weekNums.get(options1).get(option2);
+                Integer coursePartId = courseParts.get(options1).get(option2).get(options3).getId();
+                //...开始发布签到要求
+                runProgressBar();
+                //提交发布的签到
+                mAllPresenter.makeCheckIn(mCurrSelectCourseId, classRoomId, weekNum, coursePartId);
+            }
+        });
     }
 
     @Override
@@ -145,17 +192,62 @@ public class AllActivity extends AppCompatActivity implements AllView, RelativeV
         mainHandler.sendEmptyMessage(0);
     }
 
+    /**
+     * 头
+     * 模块：获取课程列表
+     */
+    @Override
+    public void startObtainCourses() {
+
+    }
+
     @Override
     public String getTeaNum() {
         return num;
     }
+
+    @Override
+    public String getDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(new Date());
+    }
+
+    @Override
+    public void errorObtainCourse(int status, String msg) {
+
+    }
+    /**
+     * 尾
+     * 模块：获取课程列表
+     */
+
+//---------------------
+
+    /**
+     * 头
+     * 模块：发布签到请求
+     */
+    @Override
+    public void successMakeCheckIn() {
+        mMakeCheckInInfoOptionView.dismiss();
+        stopProgressBar();
+    }
+
+    @Override
+    public void errorMakeCheckIn(int status, String msg) {
+        Toast.makeText(mContext, msg + status, Toast.LENGTH_LONG).show();
+        stopProgressBar();
+    }
+    /**
+     * 尾
+     * 模块：发布签到请求
+     */
 
     //AllView接口的尾
 
     /**
      * RelativeView接口的头
      */
-
 
     @Override
     public Context getContext() {
@@ -252,13 +344,19 @@ public class AllActivity extends AppCompatActivity implements AllView, RelativeV
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case 1:
+                    case 1://首页
 
                         break;
-                    case 2:
+                    case 2://信息
 
                         break;
-                    case 3:
+                    case 3://签到发布按钮
+                        mAllPresenter.getMakeCheckInInfos();
+                        break;
+                    case 4://发现
+
+                        break;
+                    case 5://我
 
                         break;
                 }

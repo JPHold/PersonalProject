@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/makeCheckIn_item"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y40"
+    android:layout_marginTop="@dimen/y6"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y20">
+
+        <TextView
+            android:id="@+id/makeCheckIn_item_textView_weekNum_part"
+            android:layout_width="@dimen/x106"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/x15" />
+
+        <TextView
+            android:id="@+id/makeCheckIn_item_textView_classRoom"
+            android:layout_width="@dimen/x63"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/x15" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/makeCheckIn_item_textView_makeTime"
+        android:layout_width="@dimen/x252"
+        android:layout_height="@dimen/y20"
+        android:layout_marginLeft="@dimen/x15" />
+
+</LinearLayout>

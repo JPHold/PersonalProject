@@ -8,5 +8,5 @@ import com.hjp.main.all.main.service.listener.OnCoursesObtainListener;
 
 public interface MainService {
 
-    void getCourses(String teaNum,OnCoursesObtainListener onCoursesObtainListener);
+    void getCourses(String teaNum, String date,OnCoursesObtainListener onCoursesObtainListener);
 }

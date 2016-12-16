@@ -28,7 +28,7 @@ import okhttp3.Response;
 public class MainServiceImpl implements MainService {
 
     @Override
-    public void getCourses(String teaNum, final OnCoursesObtainListener onCoursesObtainListener) {
+    public void getCourses(String teaNum, String date,final OnCoursesObtainListener onCoursesObtainListener) {
         StringCallback stringCallback = new StringCallback() {
             @Override
             public String parseNetworkResponse(Response response, int id) throws IOException {
@@ -54,7 +54,7 @@ public class MainServiceImpl implements MainService {
 
                         if (courses != null) {
 
-                            List<String> courseNums = new ArrayList<>();
+                            List<String> courseIds = new ArrayList<>();
                             List<String> courseNames = new ArrayList<>();
 
                             for (int i = 0; i < courses.size(); i++) {
@@ -63,9 +63,9 @@ public class MainServiceImpl implements MainService {
                                 Iterator checkInTypeKeys = course.entrySet().iterator();
                                 while (checkInTypeKeys.hasNext()) {
                                     Map.Entry courseEntry = (Map.Entry) checkInTypeKeys.next();
-                                    //课程编号
-                                    String courseNum = (String) courseEntry.getKey();
-                                    courseNums.add(courseNum);
+                                    //课程id
+                                    String courseId = (String) courseEntry.getKey();
+                                    courseIds.add(courseId);
 
                                     //课程名
                                     String courseName = (String) courseEntry.getValue();
@@ -73,7 +73,7 @@ public class MainServiceImpl implements MainService {
                                 }
                             }
 
-                            onCoursesObtainListener.onSuccess(courseNums,courseNames);
+                            onCoursesObtainListener.onSuccess(courseIds,courseNames);
 
                         }
                     } catch (JSONException e) {
@@ -93,6 +93,7 @@ public class MainServiceImpl implements MainService {
                 .post()
                 .url(MainUrl.URL_FINDCOURSELISTFROMTEACHER)
                 .addParams(MainUrl.PARAM_TEACHERNUM, teaNum)
+                .addParams(MainUrl.PARAM_DATE, date)
                 .build()
                 .execute(stringCallback);
     }

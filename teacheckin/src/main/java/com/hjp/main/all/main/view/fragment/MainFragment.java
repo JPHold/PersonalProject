@@ -18,6 +18,8 @@ import com.hjp.main.all.view.AllView;
 import com.hjp.main.all.view.RelativeView;
 import com.hjp.others.app.MainApplication;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -74,6 +76,12 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
     }
 
     @Override
+    public String getDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return simpleDateFormat.format(new Date());
+    }
+
+    @Override
     public void errorObtainCourse(int status, String msg) {
         mRelativeView.stopProgressBar();
         Toast.makeText(MainApplication.getContext(), status + "," + msg, Toast.LENGTH_LONG).show();
@@ -85,6 +93,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Mai
                 , courseNums, courseNames, mRelativeView.getContext());
 
         mViewPagerClasses.setAdapter(coursesAdapter);
+        mViewPagerClasses.setOffscreenPageLimit(1);
         mTabLayoutCourses.setupWithViewPager(mViewPagerClasses);
     }
 

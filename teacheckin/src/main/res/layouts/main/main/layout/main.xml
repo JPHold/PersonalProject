@@ -18,7 +18,7 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/main_viewPager_classes"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y270"
+        android:layout_height="@dimen/y280"
         android:background="#565555" />
 
 </LinearLayout>

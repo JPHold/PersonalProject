@@ -26,7 +26,7 @@
     <FrameLayout
         android:id="@+id/all_frameLayout_fragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y310" />
+        android:layout_height="@dimen/y320" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:layout_width="@dimen/x116"
+                android:layout_width="@dimen/x64"
                 android:layout_height="match_parent"
                 android:button="@null"
                 android:drawableTop="@drawable/main_tab_check_img_bg"
@@ -51,7 +51,7 @@
                 android:textColor="@drawable/main_tab_check_text_color" />
 
             <RadioButton
-                android:layout_width="@dimen/x116"
+                android:layout_width="@dimen/x64"
                 android:layout_height="match_parent"
                 android:button="@null"
                 android:drawableTop="@drawable/main_tab_check_img_bg"
@@ -59,8 +59,26 @@
                 android:text="信息"
                 android:textColor="@drawable/main_tab_check_text_color" />
 
+            <!--发布签到按钮-->
             <RadioButton
-                android:layout_width="@dimen/x116"
+                android:layout_width="@dimen/x64"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableTop="@drawable/main_tab_check_img_bg"
+                android:gravity="center_horizontal" />
+
+            <RadioButton
+                android:layout_width="@dimen/x64"
+                android:layout_height="match_parent"
+                android:button="@null"
+                android:drawableTop="@drawable/main_tab_check_img_bg"
+                android:gravity="center_horizontal"
+                android:text="发现"
+                android:textColor="@drawable/main_tab_check_text_color" />
+
+
+            <RadioButton
+                android:layout_width="@dimen/x64"
                 android:layout_height="match_parent"
                 android:button="@null"
                 android:drawableTop="@drawable/main_tab_check_img_bg"
@@ -73,11 +91,11 @@
 
     <ProgressBar
         android:id="@+id/all_progressBar"
-        style="@android:style/Widget.ProgressBar.Inverse"
+        style="@android:style/Widget.Holo.ProgressBar"
         android:layout_width="@dimen/y40"
         android:layout_height="@dimen/y40"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/y180"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 </LinearLayout>
 
